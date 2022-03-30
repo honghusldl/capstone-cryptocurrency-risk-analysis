@@ -3,9 +3,9 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import plotly.express as px
 
-from distribution_analysis import distribution_analysis
-from intro import introduction
-from user_analysis import user_analysis
+from distribution_analysis_page import distribution_analysis
+from introduction_page import introduction
+from user_analysis_page import user_analysis
 
 def main():
     # Streamlit web
