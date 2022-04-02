@@ -32,7 +32,7 @@ def get_crypto_api():
   }
   headers = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': '114eccc4-72b1-4540-8d65-dd998d202503',
+    'X-CMC_PRO_API_KEY': '', # replace with personal API key
   }
 
   session = Session()
