@@ -1,7 +1,4 @@
 import streamlit as st
-from requests import Request, Session
-from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
-import json
 from functions import get_crypto_api, get_coin_list
 
 def user_analysis():
@@ -83,21 +80,21 @@ def user_analysis():
 
         st.subheader("Current data from coinmarketcap.com:")
 
-        st.markdown(f'**price** = {coin_list[add_selectbox]["price"]}')
-        st.markdown(f'**volume** = {coin_list[add_selectbox]["volume"]}')
-        st.markdown(f'**market_cap** = {coin_list[add_selectbox]["market_cap"]}')
-        st.markdown(f'**price change 1h** = {coin_list[add_selectbox]["pc_1h"]}')
-        st.markdown(f'**price change 24h** = {coin_list[add_selectbox]["pc_24h"]}')
-        st.markdown(f'**price change 7d** = {coin_list[add_selectbox]["pc_7d"]}')
-        st.markdown(f'**price change 30d** = {coin_list[add_selectbox]["pc_30d"]}')
-        st.markdown(f'**price change 60d** = {coin_list[add_selectbox]["pc_60d"]}')
-        st.markdown(f'**price change 90d** = {coin_list[add_selectbox]["pc_90d"]}')
-        st.markdown(f'**volume change 24h** = {coin_list[add_selectbox]["volume_change"]}')
-        st.markdown(f'**market cap dominance** = {coin_list[add_selectbox]["dominance"]}')
-        st.markdown(f'**number of market pairs** = {coin_list[add_selectbox]["market_pairs"]}')
-        st.markdown(f'**circulating supply** = {coin_list[add_selectbox]["circulating_supply"]}')
-        st.markdown(f'**max supply** = {coin_list[add_selectbox]["max_supply"]}')
-        st.markdown(f'**total supply** = {coin_list[add_selectbox]["total_supply"]}')
+        st.markdown(f'**Price** = {coin_list[add_selectbox]["price"]}')
+        st.markdown(f'**Volume** = {coin_list[add_selectbox]["volume"]}')
+        st.markdown(f'**Market_cap** = {coin_list[add_selectbox]["market_cap"]}')
+        st.markdown(f'**Price change 1h in %** = {coin_list[add_selectbox]["pc_1h"]}')
+        st.markdown(f'**Price change 24h in  %** = {coin_list[add_selectbox]["pc_24h"]}')
+        st.markdown(f'**Price change 7d in %** = {coin_list[add_selectbox]["pc_7d"]}')
+        st.markdown(f'**Price change 30d in %** = {coin_list[add_selectbox]["pc_30d"]}')
+        st.markdown(f'**Price change 60d in %** = {coin_list[add_selectbox]["pc_60d"]}')
+        st.markdown(f'**Price change 90d in %** = {coin_list[add_selectbox]["pc_90d"]}')
+        st.markdown(f'**Volume change 24h in %** = {coin_list[add_selectbox]["volume_change"]}')
+        st.markdown(f'**Market cap dominance** = {coin_list[add_selectbox]["dominance"]}')
+        st.markdown(f'**Number of market pairs** = {coin_list[add_selectbox]["market_pairs"]}')
+        st.markdown(f'**Circulating supply** = {coin_list[add_selectbox]["circulating_supply"]}')
+        st.markdown(f'**Max supply** = {coin_list[add_selectbox]["max_supply"]}')
+        st.markdown(f'**Total supply** = {coin_list[add_selectbox]["total_supply"]}')
 
 
         
@@ -116,5 +113,5 @@ def user_analysis():
                             score15*weight15)/
                         sums,1)
         coin_risk = 100 - confidence
-        st.markdown(f':point_right:Coin risk level based on the user feedback: **{coin_risk}%**')
-
+        # st.markdown(f':point_right:Coin risk level based on the user feedback: **{coin_risk}%**')
+        st.metric(label = f"Risk Index for {add_selectbox}", value = f"{round(coin_risk,3)}%")

@@ -1,7 +1,6 @@
 import ssl
 import streamlit as st
 from streamlit_option_menu import option_menu
-import plotly.express as px
 
 from distribution_analysis_page import distribution_analysis
 from introduction_page import introduction

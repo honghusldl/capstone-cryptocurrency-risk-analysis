@@ -141,11 +141,11 @@ def distribution_analysis():
                         result_pc_90d * weight_pc_90d / 100 / get_max_density(df, '%price_change_90d') + \
                             result_volume_change_24h * weight_volume_24h / 100 / get_max_density(df, '%volume_change_24h')
         
-        risk_output = final_result / 6 * 100
-        # risk_output = 1 - (final_result / 6 * 100)
+        risk_output = (100 - (final_result / 6 * 100))
+        # risk_output = 1 - risk_output
         # display risk index to users
 
         if (weight_pc_24h != 0) & (weight_pc_30d != 0) & (weight_pc_60d != 0) & (weight_pc_7d != 0) & (weight_pc_90d != 0) & (weight_volume_24h != 0) :
-            st.metric(label = f"Risk Index for {selected_coin}", value = f"{round(risk_output,3)}%")
+            st.metric(label = f"Risk Index for {selected_coin}", value = f"{round(risk_output,1)}%")
         else:
             st.metric(label = f"Risk Index for {selected_coin}", value = "Calculation in progress...", delta = "Enter all weights for risk estimation", delta_color = "off")

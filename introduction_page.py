@@ -8,8 +8,8 @@ def introduction():
 
     st.write("Approach 1 explaination")
     st.write("Approach 2 explaination")
-
-    st.image("coin.gif")
+    col1, col2, col3 = st.columns((0.3,1,0.3))
+    col2.image("coin.gif")
 
     st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by 李鸿鹄")
 
