@@ -1,8 +1,6 @@
-import numpy as np, pandas as pd
-import ssl
+import numpy as np
 import streamlit as st
-from streamlit_option_menu import option_menu
-import plotly.express as px
+
 
 from functions import get_crypto_api, get_coin_list, get_max_density, find_best_distribution, data_wrangling, get_name_parameters,get_historical_data, cauchy_pdf, chi2_pdf, expon_pdf, exponpow_pdf, gamma_pdf, lognorm_pdf, norm_pdf, powerlaw_pdf, rayleigh_pdf, uniform_pdf
 
