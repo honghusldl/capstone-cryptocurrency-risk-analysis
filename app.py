@@ -6,6 +6,9 @@ from distribution_analysis_page import distribution_analysis
 from introduction_page import introduction
 from user_analysis_page import user_analysis
 
+# print('test')
+# test # 2
+
 def main():
     # Streamlit web
     st.set_page_config(layout="wide")
