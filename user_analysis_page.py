@@ -7,7 +7,7 @@ def user_analysis():
     coin_list = get_coin_list(get_crypto_api())
     coin_names = list(coin_list.keys())
     coin_names.insert(0, "Select a coin")
-    print('hi')
+    
 
     add_selectbox = st.selectbox(
         "Choose a coin:",
