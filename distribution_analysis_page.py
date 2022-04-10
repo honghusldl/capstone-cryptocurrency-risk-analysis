@@ -1,6 +1,8 @@
-import numpy as np
+import numpy as np, pandas as pd
+import ssl
 import streamlit as st
-
+from streamlit_option_menu import option_menu
+import plotly.express as px
 
 from functions import get_crypto_api, get_coin_list, get_max_density, find_best_distribution, data_wrangling, get_name_parameters,get_historical_data, cauchy_pdf, chi2_pdf, expon_pdf, exponpow_pdf, gamma_pdf, lognorm_pdf, norm_pdf, powerlaw_pdf, rayleigh_pdf, uniform_pdf
 
@@ -26,72 +28,107 @@ def distribution_analysis():
         coin_names
     )
     if selected_coin != "Select a coin":
-        st.markdown(f"**Price** : (USD)$ {coin_list[selected_coin]['price']}")
-        st.markdown(f"**Volume** : {coin_list[selected_coin]['volume']}")
+        price = "{:,}".format(round(coin_list[selected_coin]['price'],2))
+        volume = "{:,}".format(round(coin_list[selected_coin]['volume'],2))
+        symbol = coin_list[selected_coin]['symbol']
+        st.markdown(f"**Price** : (USD) ${price}")
+        st.markdown(f"**Volume** : ${volume}") 
+        st.markdown(f"**Symbol** : {symbol}") 
+        st.subheader(":point_down:Enter a Weight for each indicator")
         st.markdown("---")
+        
 
-        st.markdown(f"**Price Change in 24 Hours** :  {round(coin_list[selected_coin]['pc_24h'] * 100, 3)}%")
+        # some design adjustments
+        st.write(
+            """
+            <style>
+            [data-testid="stMetricDelta"] div {
+                #border: 1px outset green;
+                #background-color: lightblue;
+                #text-align: center;
+                font-family: 'SmallCaps', sans-serif;
+                font-weight: bold;
+                font-size: 30px;
+                #text-shadow: 0.2em 0.2em /* 0.2em */ silver ;
+            }
+            [data-testid="stMetricValue"] div {
+                font-size: 35px;
+            }
+            [class="stNumberInput"] div {
+                width: 38%;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        # price change 24h
+        st.metric("", f"{selected_coin} Price Change in 24 Hours", delta=f"{round(coin_list[selected_coin]['pc_24h'], 2)}%", delta_color="normal")
         weight_pc_24h = st.number_input(
-            "Please Enter a Weight:",
+            "Please Enter a Weight from 0 to 10:",
             min_value = 0,
-            max_value = 100,
+            max_value = 10,
             step = 1,
             key = 1
         )
         st.markdown("---")
 
-        st.markdown(f"**Price Change in 7 Days** :  {round(coin_list[selected_coin]['pc_7d'],3)}%")
+        # price change 7d
+        st.metric("", f"{selected_coin} Price Change in 7 Days", delta=f"{round(coin_list[selected_coin]['pc_7d'], 2)}%", delta_color="normal")
         weight_pc_7d = st.number_input(
-            "Please Enter a Weight:",
+            "Please Enter a Weight from 0 to 10:",
             min_value = 0,
-            max_value = 100,
+            max_value = 10,
             step = 1,
             key = 2
         )
         st.markdown("---")
 
-        st.markdown(f"**Price Change in 30 Days** :  {round(coin_list[selected_coin]['pc_30d'],3)}%")
+        # price change 30d
+        st.metric("", f"{selected_coin} Price Change in 30 Days", delta=f"{round(coin_list[selected_coin]['pc_30d'], 2)}%", delta_color="normal")
         weight_pc_30d = st.number_input(
-            "Please Enter a Weight:",
+            "Please Enter a Weight from 0 to 10:",
             min_value = 0,
-            max_value = 100,
+            max_value = 10,
             step = 1,
             key = 3
         )
         st.markdown("---")
 
-        st.markdown(f"**Price Change in 60 Days** :  {round(coin_list[selected_coin]['pc_60d'],3)}%")
+        # price change 60d
+        st.metric("", f"{selected_coin} Price Change in 60 Days", delta=f"{round(coin_list[selected_coin]['pc_60d'], 2)}%", delta_color="normal")
         weight_pc_60d = st.number_input(
-            "Please Enter a Weight:",
+            "Please Enter a Weight from 0 to 10:",
             min_value = 0,
-            max_value = 100,
+            max_value = 10,
             step = 1,
             key = 4
         )
         st.markdown("---")
 
-        st.markdown(f"**Price Change in 90 Days** :  {round(coin_list[selected_coin]['pc_90d'],3)}%")
+        # price change 90d
+        st.metric("", f"{selected_coin} Price Change in 90 Days", delta=f"{round(coin_list[selected_coin]['pc_90d'], 2)}%", delta_color="normal")
         weight_pc_90d = st.number_input(
-            "Please Enter a Weight:",
+            "Please Enter a Weight from 0 to 10:",
             min_value = 0,
-            max_value = 100,
+            max_value = 10,
             step = 1,
             key = 5
         )
         st.markdown("---")
 
-        st.markdown(f"**Volume Change in 24 Hours** : {round(coin_list[selected_coin]['volume_change'],3)}%")
+        # volume change 24h
+        st.metric("", f"{selected_coin} Price Change in 24 Hours", delta=f"{round(coin_list[selected_coin]['volume_change'], 2)}%", delta_color="normal")
         weight_volume_24h = st.number_input(
-            "Please Enter a Weight:",
+            "Please Enter a Weight from 0 to 10:",
             min_value = 0,
-            max_value = 100,
+            max_value = 10,
             step = 1,
             key = 6
         )
         st.markdown("---")
 
         df = get_historical_data(coin_list[selected_coin]['symbol'])
-
         df = data_wrangling(df)
 
         try:
@@ -132,18 +169,22 @@ def distribution_analysis():
         distname_volume_change_24h, distparams_volume_change_24h = get_name_parameters(best_dist, '%volume_change_24h')
         result_volume_change_24h = get_pdfs[distname_volume_change_24h](coin_list[selected_coin]['volume_change'], distparams_volume_change_24h)
 
-        final_result = result_pc_24h * weight_pc_24h / 100 / get_max_density(df,'%price_change_24h') + \
-            result_pc_7d * weight_pc_7d / 100 / get_max_density(df, '%price_change_7d') + \
-                result_pc_30d * weight_pc_30d / 100 / get_max_density(df, '%price_change_30d') + \
-                    result_pc_60d * weight_pc_60d / 100 / get_max_density(df, '%price_change_60d') + \
-                        result_pc_90d * weight_pc_90d / 100 / get_max_density(df, '%price_change_90d') + \
-                            result_volume_change_24h * weight_volume_24h / 100 / get_max_density(df, '%volume_change_24h')
+        final_result = result_pc_24h * 100 * weight_pc_24h / get_max_density(df,'%price_change_24h') + \
+            result_pc_7d * 100 * weight_pc_7d / get_max_density(df, '%price_change_7d') + \
+                result_pc_30d * 100 * weight_pc_30d / get_max_density(df, '%price_change_30d') + \
+                    result_pc_60d * 100 * weight_pc_60d / get_max_density(df, '%price_change_60d') + \
+                        result_pc_90d * 100 * weight_pc_90d / get_max_density(df, '%price_change_90d') + \
+                            result_volume_change_24h * 100 * weight_volume_24h / get_max_density(df, '%volume_change_24h')
+                            
+        weight_sum = sum([weight_pc_24h,weight_pc_30d,weight_pc_60d,weight_pc_7d,weight_pc_90d,weight_volume_24h])
+        risk_output = round(100 - (final_result / weight_sum),1)
         
-        risk_output = (100 - (final_result / 6 * 100))
-        # risk_output = 1 - risk_output
+        
         # display risk index to users
-
-        if (weight_pc_24h != 0) & (weight_pc_30d != 0) & (weight_pc_60d != 0) & (weight_pc_7d != 0) & (weight_pc_90d != 0) & (weight_volume_24h != 0) :
-            st.metric(label = f"Risk Index for {selected_coin}", value = f"{round(risk_output,1)}%")
+        if st.button('Calculate'):
+            if (weight_pc_24h == 0) & (weight_pc_30d == 0) & (weight_pc_60d == 0) & (weight_pc_7d == 0) & (weight_pc_90d == 0) & (weight_volume_24h == 0):
+                st.write('Please, enter the weights properly.')
+            else:
+                st.metric(label = f"Risk Index for {selected_coin}", value = f"{risk_output}%")
         else:
-            st.metric(label = f"Risk Index for {selected_coin}", value = "Calculation in progress...", delta = "Enter all weights for risk estimation", delta_color = "off")
+            st.write('Click the button to calculate the risk.')

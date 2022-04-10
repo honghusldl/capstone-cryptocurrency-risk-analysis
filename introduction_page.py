@@ -11,6 +11,6 @@ def introduction():
     col1, col2, col3 = st.columns((0.3,1,0.3))
     col2.image("coin.gif")
 
-    st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by 李鸿鹄")
+    st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by Team Humber Coin. Team member: Fadumo Diriye, Honghu Li, Nadiia Pavlovska & Mathew Sminu.")
 
 
