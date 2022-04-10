@@ -7,6 +7,8 @@ import pandas as pd
 def user_analysis():
 # # BUILDING THE WEB PAGE
 # st.title ("Risk tolerance assessment")
+    st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by Team Humber Coin. Team member: Fadumo Diriye, Honghu Li, Nadiia Pavlovska & Mathew Sminu.")
+    
     coin_list = get_coin_list(get_crypto_api())
     coin_names = list(coin_list.keys())
     coin_names.insert(0, "Select a coin")
