@@ -55,7 +55,7 @@ def distribution_analysis():
                 font-size: 35px;
             }
             [class="stNumberInput"] div {
-                width: 38%;
+                width: 70%;
             }
             </style>
             """,

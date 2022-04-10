@@ -40,10 +40,11 @@ def user_analysis():
             font-size: 35px;
         }
         [class="stNumberInput"] div {
-            width: 38%;
+
+            width: 70%;
         }
         [class="stSlider"] div {
-            width: 57%;
+            width: 75%;
         }
         </style>
         """,
@@ -52,6 +53,8 @@ def user_analysis():
     Slider_Cursor = st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div > div[role="slider"]{
         width: 2%; </style>''', unsafe_allow_html = True)
 
+    Max_TickBar = st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div[data-testid="stTickBarMax"]{
+        position: relative; left: 150px; </style>''', unsafe_allow_html = True)
 
     st.markdown("""
         <style>
