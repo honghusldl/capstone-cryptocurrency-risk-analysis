@@ -130,6 +130,7 @@ def distribution_analysis():
         )
         st.markdown("---")
 
+        # CALCULATIONS
         df = get_historical_data(coin_list[selected_coin]['symbol'])
         df = data_wrangling(df)
 
@@ -143,15 +144,6 @@ def distribution_analysis():
             else:
                 best_dist = find_best_distribution(df)
 
-        # for col in df.drop(['date','volume','price','market cap'], axis = 1).columns:
-
-        #     dist_name, dist_params = get_name_parameters(best_dist, col)
-
-        #     result = get_pdfs[dist_name](x, dist_params)
-
-        #     final_result += weight* result / get_max_density(df,col)
-        #     normed_final_result = final_result/6 * 100
-        #     risk = 1 - normed_final_result
 
         distname_pc_24h, distparams_pc_24h = get_name_parameters(best_dist, '%price_change_24h')
         result_pc_24h = get_pdfs[distname_pc_24h](coin_list[selected_coin]['pc_24h'], distparams_pc_24h)
@@ -187,6 +179,6 @@ def distribution_analysis():
             if (weight_pc_24h == 0) & (weight_pc_30d == 0) & (weight_pc_60d == 0) & (weight_pc_7d == 0) & (weight_pc_90d == 0) & (weight_volume_24h == 0):
                 st.write('Please, enter the weights properly.')
             else:
-                st.metric(label = f"Risk Index for {selected_coin}", value = f"{risk_output}%")
+                st.metric(label = f"Risk Index for {selected_coin}", delta = f"{risk_output}%")
         else:
             st.write('Click the button to calculate the risk.')
