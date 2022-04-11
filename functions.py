@@ -51,59 +51,33 @@ def get_coin_list(data):
   coin_list = {}
   for i in range(5000):
     name = data['data'][i]['name']
-    symbol = data['data'][i]['symbol']
-    id = data['data'][i]['id']
-    circulating_supply = data['data'][i]['circulating_supply']
-    max_supply = data['data'][i]['max_supply']
-    total_supply = data['data'][i]['total_supply']
-    market_pairs = data['data'][i]['num_market_pairs']
-    market_cap = data['data'][i]['quote']['USD']['market_cap']
-    dominance = data['data'][i]['quote']['USD']['market_cap_dominance']
-    price =  data['data'][i]['quote']['USD']['price']
-    pc_1h = data['data'][i]['quote']['USD']['percent_change_1h']
-    pc_24h = data['data'][i]['quote']['USD']['percent_change_24h']
-    pc_7d = data['data'][i]['quote']['USD']['percent_change_7d']
-    pc_30d =  data['data'][i]['quote']['USD']['percent_change_30d']
-    pc_60d =  data['data'][i]['quote']['USD']['percent_change_60d']
-    pc_90d =  data['data'][i]['quote']['USD']['percent_change_90d']
-    volume =  data['data'][i]['quote']['USD']['volume_24h']
-    volume_change =  data['data'][i]['quote']['USD']['volume_change_24h']
-    # coin_list[name] = [id, symbol,circulating_supply, max_supply, total_supply, market_pairs, market_cap, dominance, price, pc_1h, pc_24h, pc_7d, pc_30d, pc_60d,pc_90d, volume, volume_change ]
+    
     coin_list[name] = {}
     
-    coin_list[name]["symbol"] = symbol
-    coin_list[name]["id"] = id
-    coin_list[name]["circulating_supply"] = circulating_supply
-    coin_list[name]["max_supply"] = max_supply
-    coin_list[name]["total_supply"] = total_supply
-    coin_list[name]["market_pairs"] = market_pairs
-    coin_list[name]["market_cap"] = market_cap
-    coin_list[name]["dominance"] = dominance
-    coin_list[name]["price"] = price
-    coin_list[name]["pc_1h"] = pc_1h
-    coin_list[name]["pc_24h"] = pc_24h
-    coin_list[name]["pc_7d"] = pc_7d
-    coin_list[name]["pc_30d"] = pc_30d
-    coin_list[name]["pc_60d"] = pc_60d
-    coin_list[name]["pc_90d"] = pc_90d
-    coin_list[name]["volume"] = volume
-    coin_list[name]["volume_change"] = volume_change
+    coin_list[name]["symbol"] = data['data'][i]['symbol']
+    coin_list[name]["id"] = data['data'][i]['id']
+    coin_list[name]["circulating_supply"] = data['data'][i]['circulating_supply']
+    coin_list[name]["max_supply"] = data['data'][i]['max_supply']
+    coin_list[name]["total_supply"] = data['data'][i]['total_supply']
+    coin_list[name]["market_pairs"] = data['data'][i]['num_market_pairs']
+    coin_list[name]["market_cap"] = data['data'][i]['quote']['USD']['market_cap']
+    coin_list[name]["dominance"] = data['data'][i]['quote']['USD']['market_cap_dominance']
+    coin_list[name]["price"] = data['data'][i]['quote']['USD']['price']
+    coin_list[name]["pc_1h"] = data['data'][i]['quote']['USD']['percent_change_1h']
+    coin_list[name]["pc_24h"] = data['data'][i]['quote']['USD']['percent_change_24h']
+    coin_list[name]["pc_7d"] = data['data'][i]['quote']['USD']['percent_change_7d']
+    coin_list[name]["pc_30d"] = data['data'][i]['quote']['USD']['percent_change_30d']
+    coin_list[name]["pc_60d"] = data['data'][i]['quote']['USD']['percent_change_60d']
+    coin_list[name]["pc_90d"] = data['data'][i]['quote']['USD']['percent_change_90d']
+    coin_list[name]["volume"] = data['data'][i]['quote']['USD']['volume_24h']
+    coin_list[name]["volume_change"] = data['data'][i]['quote']['USD']['volume_change_24h']
 
   return coin_list
 
 def get_historical_data(symbol):
   # initialise scraper without time interval
   scraper = CmcScraper(symbol)
-
-  # get raw data as list of list
-  headers, data = scraper.get_data()
-
-  # get data in a json format
-  xrp_json_data = scraper.get_data("json")
-
-  # # export the data as csv file, you can also pass optional `name` parameter
-  # scraper.export("csv", name="bit_all_time")
-
+  
   # Pandas dataFrame for the same data
   df = scraper.get_dataframe()
 
@@ -193,7 +167,7 @@ get_pdfs = {
 }
 
 def data_wrangling(df):
-      # data cleaning
+    # data cleaning
     df.drop(['Open','High','Low'], axis = 1, inplace = True)
 
     df['close_24h'] = df['Close'].shift(periods = -1)
