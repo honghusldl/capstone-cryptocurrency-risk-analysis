@@ -40,7 +40,6 @@ def user_analysis():
             font-size: 35px;
         }
         [class="stNumberInput"] div {
-
             width: 70%;
         }
         [class="stSlider"] div {
@@ -52,7 +51,6 @@ def user_analysis():
     )
     Slider_Cursor = st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div > div[role="slider"]{
         width: 2%; </style>''', unsafe_allow_html = True)
-
     Max_TickBar = st.markdown(''' <style> div.stSlider > div[data-baseweb="slider"] > div > div[data-testid="stTickBarMax"]{
         position: relative; left: 150px; </style>''', unsafe_allow_html = True)
 
@@ -453,9 +451,7 @@ def user_analysis():
                             sums,1)
                 coin_risk = 100 - confidence
 
-                st.markdown(":star:")
-                st.metric(label = f"Risk Index for {selected_coin}", value = f"{round(coin_risk,3)}%")
-                
+                st.metric(label = f"Risk Index for {selected_coin}", value = f"{round(coin_risk,3)}%")                
 
             
                 # SAVE THE RESULTS IN CSV FILE

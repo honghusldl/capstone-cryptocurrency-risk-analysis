@@ -177,6 +177,6 @@ def distribution_analysis():
             if (weight_pc_24h == 0) & (weight_pc_30d == 0) & (weight_pc_60d == 0) & (weight_pc_7d == 0) & (weight_pc_90d == 0) & (weight_volume_24h == 0):
                 st.write('Please, enter the weights properly.')
             else:
-                st.metric(label = f"Risk Index for {selected_coin}", delta = f"{risk_output}%")
+                st.metric(label = f"Risk Index for {selected_coin}", value = f"{risk_output}%")
         else:
             st.write('Click the button to calculate the risk.')
