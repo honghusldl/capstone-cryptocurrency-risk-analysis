@@ -65,7 +65,7 @@ def introduction():
         of its existence. The farther away from the center a value falls, the higher the risk of the coin's \
         volatility for the observing period. However, be mindful that such symmetry as presented in the picture \
         is not always the case and can vary from coin to coin. \
-        \n Next, the algorithm decides which Probability Distribution Fitting (see *Definitions* below) \
+        \n Next, the algorithm (with the help of Python SciPy package) decides which probability distribution \
         fits the set of data the best. In this case, it is the Cauchy distribution (represented in orange colour). \
         Each distribution has its own unique formula that will be used in the following calculations. \
         \n Once the current value of the Price 24h Change is pulled from Coinmarketcap, it is plugged into the formula \
