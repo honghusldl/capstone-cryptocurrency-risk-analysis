@@ -20,6 +20,8 @@ get_pdfs = {
 }
 
 def distribution_analysis():
+    st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by Team Humber Coin. Team members: Fadumo Diriye, Honghu Li, Nadiia Pavlovska & Sminu Mathew.")
+    
     coin_list = get_coin_list(get_crypto_api())
     coin_names = list(coin_list.keys())
     coin_names.insert(0, "Select a coin")

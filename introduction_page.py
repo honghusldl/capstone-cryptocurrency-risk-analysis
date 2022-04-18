@@ -77,6 +77,6 @@ def introduction():
         and estimate its future price and volume fluctuations."
         )
 
-    st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by Team Humber Coin. Team member: Fadumo Diriye, Honghu Li, Nadiia Pavlovska & Mathew Sminu.")
+    st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by Team Humber Coin. Team members: Fadumo Diriye, Honghu Li, Nadiia Pavlovska & Sminu Mathew.")
 
 
