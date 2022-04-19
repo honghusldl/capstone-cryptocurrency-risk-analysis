@@ -1,5 +1,5 @@
 import streamlit as st
-from functions import get_crypto_api, get_coin_list
+from functions import get_crypto_api, get_coin_list, get_beta
 from datetime import datetime
 from pytz import timezone
 import pandas as pd
@@ -429,6 +429,32 @@ def user_analysis():
             key = 15
         )
         st.markdown("---")
+        
+        # Beta
+        beta = get_beta(symbol)
+        if beta is None:
+            beta = "-"
+        else:
+            beta = round(beta, 2)
+            
+        st.metric(label="", value=f"{selected_coin} Beta", delta=f"{beta}")
+        st.text('Beta is a market correlated volatility indicator. See "Definitions" on the Introduction page to learn more.')
+        score_beta = st.slider(
+            "Please Enter a Score from 0 to 100%",
+            min_value = 0,
+            max_value = 100,
+            value = 50, 
+            key = 16
+        )
+        weight_beta = st.number_input(
+            "Please Enter a Weight from 0 to 10:",
+            min_value = 0,
+            max_value = 10,
+            step = 1,
+            key = 16
+        )
+        st.markdown("---")
+        
 
 
         # CALCULATING RESULTS
@@ -458,7 +484,6 @@ def user_analysis():
             
                 # SAVE THE RESULTS IN CSV FILE
 
-                fmt = "%Y-%m-%d %H:%M:%S %Z%z"
                 time_object = datetime.now(timezone('US/Eastern'))
                 
                 results = {'coin':[selected_coin], 'timestamp':[time_object], 

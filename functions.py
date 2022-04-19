@@ -2,6 +2,7 @@
 import streamlit as st
 # Data Processing
 import numpy as np
+import pandas as pd
 
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -18,6 +19,10 @@ import json
 
 # get distributions from scipy
 from scipy.stats import cauchy,chi2,expon,exponpow,gamma,lognorm,norm,powerlaw,rayleigh,uniform
+
+# linear regression for beta calculations
+from scipy.stats import linregress
+
 
 @st.cache
 def get_crypto_api():
@@ -82,6 +87,39 @@ def get_historical_data(symbol):
   df = scraper.get_dataframe()
 
   return df
+
+def get_beta(symbol):
+  # get alt coin data
+  scraper_alt = CmcScraper(symbol)
+  alt_df = scraper_alt.get_dataframe()
+  
+  # get bitcoin data
+  scraper_btc = CmcScraper("BTC")
+  btc_df = scraper_btc.get_dataframe()
+  
+  # adjust the length of bitcoin df to match the alt df
+  alt_length = len(alt_df)
+  btc_df = btc_df[:alt_length]
+
+  # get log return for both coins
+  alt_price = alt_df['Close']
+  alt_log_returns = np.log(alt_price/alt_price.shift(1))
+  btc_price = btc_df['Close']
+  btc_log_returns = np.log(btc_price/btc_price.shift(1))
+
+   # insert calculated columnW into a new df
+  diff_df = pd.DataFrame()
+  diff_df['alt'] = alt_log_returns
+  diff_df['btc'] = btc_log_returns
+  
+  # get the slope (beta) using linear regression
+  diff_df = diff_df[1:]
+  x = diff_df['btc']
+  y = diff_df['alt']
+  results = linregress(x, y)
+  slope = results[0]
+  
+  return slope
 
 def plot_distributions(df):
   df_visual = df.replace(np.nan,0)

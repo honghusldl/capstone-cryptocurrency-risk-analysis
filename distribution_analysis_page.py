@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import plotly.express as px
 
-from functions import get_crypto_api, get_coin_list, get_max_density, find_best_distribution, data_wrangling, get_name_parameters,get_historical_data, cauchy_pdf, chi2_pdf, expon_pdf, exponpow_pdf, gamma_pdf, lognorm_pdf, norm_pdf, powerlaw_pdf, rayleigh_pdf, uniform_pdf
+from functions import get_beta, get_crypto_api, get_coin_list, get_max_density, find_best_distribution, data_wrangling, get_name_parameters,get_historical_data, cauchy_pdf, chi2_pdf, expon_pdf, exponpow_pdf, gamma_pdf, lognorm_pdf, norm_pdf, powerlaw_pdf, rayleigh_pdf, uniform_pdf
 
 get_pdfs = {
     'cauchy':cauchy_pdf,
@@ -30,12 +30,20 @@ def distribution_analysis():
         coin_names
     )
     if selected_coin != "Select a coin":
+        
+        # display symbol, price, volume, and beta after the coin has been chosen
+        symbol = coin_list[selected_coin]['symbol']
         price = "{:,}".format(round(coin_list[selected_coin]['price'],2))
         volume = "{:,}".format(round(coin_list[selected_coin]['volume'],2))
-        symbol = coin_list[selected_coin]['symbol']
+        beta = get_beta(symbol)
+        if beta is None:
+            beta = "-"
+        else:
+            beta = round(beta, 2)
+        st.markdown(f"**Symbol** : {symbol}") 
         st.markdown(f"**Price** : (USD) ${price}")
         st.markdown(f"**Volume** : ${volume}") 
-        st.markdown(f"**Symbol** : {symbol}") 
+        st.markdown(f"**Beta** (a market correlated volatility indicator; see 'Definitions' on the Introduction page to learn more): {beta}") 
         st.subheader(":point_down:Enter a Weight for each indicator")
         st.markdown("---")
         
