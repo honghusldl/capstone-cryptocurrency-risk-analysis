@@ -37,7 +37,17 @@ def introduction():
             which is why they might give it a high score of 100%) \
         \n**Weight**: The user assigns a weight to a particular feature according to its perceived importance or value \
             (i.e., the user doesn't care about trading volume, so despite giving it a high score in performance, \
-            they might give it a weight of 1)")
+            they might give it a weight of 1) \
+        \n**Beta**: It is a financial term used to describe the correlated volatility of one equity to another over a specific \
+            period of time. Typically, that correlation is to the crypto market for the past 30 trading days. The key word is correlated. \
+            If a coin has a beta of 1, that means that it is perfectly correlated with the crypto market. So, if the market went down 1%, we see \
+            that the coin also moved down 1%. \
+            If a coin had a beta of 2, that would imply that it moves in the same direction as the crypto market, but by twice as much.  \
+            In this case, it is correct to say that the equity would be more volatile than the market. In fact, \
+            it would be twice as volatile. \
+            Note: in this project, in the absence of reliable data of the overall crypto market movements, \
+            the movement of Bitcoin is taken as a benchmark instead. \
+            ")
 
     
     # APPROACH 2
