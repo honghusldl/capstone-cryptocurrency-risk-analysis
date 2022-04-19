@@ -43,7 +43,8 @@ def distribution_analysis():
         st.markdown(f"**Symbol** : {symbol}") 
         st.markdown(f"**Price** : (USD) ${price}")
         st.markdown(f"**Volume** : ${volume}") 
-        st.markdown(f"**Beta** (a market correlated volatility indicator; see 'Definitions' on the Introduction page to learn more): {beta}") 
+        st.markdown(f"**Beta** : {beta}") 
+        st.info("Beta: A market correlated volatility indicator.  \nPlease see **Definitions** on the Introduction page to learn more about Beta")
         st.subheader(":point_down:Enter a Weight for each indicator")
         st.markdown("---")
         
@@ -184,9 +185,27 @@ def distribution_analysis():
         
         # display risk index to users
         if st.button('Calculate'):
-            if (weight_pc_24h == 0) & (weight_pc_30d == 0) & (weight_pc_60d == 0) & (weight_pc_7d == 0) & (weight_pc_90d == 0) & (weight_volume_24h == 0):
-                st.write('Please, enter the weights properly.')
-            else:
-                st.metric(label = f"Risk Index for {selected_coin}", value = f"{risk_output}%")
+            with st.spinner("Please wait, calculation in progress..."):
+                if (weight_pc_24h == 0) & (weight_pc_30d == 0) & (weight_pc_60d == 0) & (weight_pc_7d == 0) & (weight_pc_90d == 0) & (weight_volume_24h == 0):
+                    st.write('Please, enter the weights properly.')
+                else:
+                    st.metric(label = f"Risk Index for {selected_coin}", value = f"{risk_output}%")
+
+                    if risk_output < 25:
+                        st.success("Low Risk")
+                    elif risk_output < 75:
+                        st.warning("Moderate Risk")
+                    elif risk_output < 100:
+                        st.error("High Risk")
+
+                    col1,col2,col3 = st.columns((1,1,1))
+                    with col1:
+                        st.markdown("*Low Risk: 0-25%*")
+                    with col2:
+                        st.markdown("*Moderate Risk: 25-75%*")
+                    with col3:
+                        st.markdown("*High Risk: 75-100%*")
+
+                    st.markdown("Please see **Result Explanation** in the Introduction Page to learn more about the result interpretation.")
         else:
             st.write('Click the button to calculate the risk.')

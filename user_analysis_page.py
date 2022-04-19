@@ -480,7 +480,20 @@ def user_analysis():
                 coin_risk = 100 - confidence
 
                 st.metric(label = f"Risk Index for {selected_coin}", value = f"{round(coin_risk,3)}%")                
+                if coin_risk < 25:
+                    st.success("Low Risk")
+                elif coin_risk < 75:
+                    st.warning("Moderate Risk")
+                elif coin_risk < 100:
+                    st.error("High Risk")
 
+                col1,col2,col3 = st.columns((1,1,1))
+                with col1:
+                    st.markdown("*Low Risk: 0-25%*")
+                with col2:
+                    st.markdown("*Moderate Risk: 25-75%*")
+                with col3:
+                    st.markdown("*High Risk: 75-100%*")
             
                 # SAVE THE RESULTS IN CSV FILE
 

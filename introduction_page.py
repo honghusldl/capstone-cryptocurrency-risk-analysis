@@ -86,6 +86,14 @@ def introduction():
         \n This approach allows the user to get an idea of a coin's riskiness based on its volatility \
         and estimate its future price and volume fluctuations."
         )
+    
+    st.markdown("#### Result Explanation:")
+    st.markdown('''Investing in riskier assets can pay off in a big way, 
+        as it offers you the chance to benefit from higher returns. However, 
+        high volatility also presents the danger of a sudden price drop and, 
+        therefore, should be regarded with caution.  \n\nNote: volatility alone is 
+        rarely a reason to buy or sell. You have to look at the investment overall 
+        to make an educated decision.''')
 
     st.sidebar.info("This Cryptocurrency risk estimation tool is designed and built by Team Humber Coin. Team members: Fadumo Diriye, Honghu Li, Nadiia Pavlovska & Sminu Mathew.")
 
