@@ -438,7 +438,7 @@ def user_analysis():
             beta = round(beta, 2)
             
         st.metric(label="", value=f"{selected_coin} Beta", delta=f"{beta}")
-        st.text('Beta is a market correlated volatility indicator. See "Definitions" on the Introduction page to learn more.')
+        st.markdown('Beta is a market correlated volatility indicator. Please see **Definitions** on the Introduction page to learn more.')
         score_beta = st.slider(
             "Please Enter a Score from 0 to 100%",
             min_value = 0,
@@ -463,12 +463,12 @@ def user_analysis():
         if st.button('Calculate'):
             
             # calculate and display the results
-            sums = sum([weight_price, weight_volume, weight_market_cap, weight_pc_1h, weight_pc_24h, weight_pc_7d, weight_pc_30d, weight_pc_60d, weight_pc_90d, weight_volume_change, weight_dominance, weight_market_pairs, weight_circulating_supply, weight_max_supply, weight_total_supply])
-            print(sums)
+            sums = sum([weight_beta, weight_price, weight_volume, weight_market_cap, weight_pc_1h, weight_pc_24h, weight_pc_7d, weight_pc_30d, weight_pc_60d, weight_pc_90d, weight_volume_change, weight_dominance, weight_market_pairs, weight_circulating_supply, weight_max_supply, weight_total_supply])
+            # print(sums)
             if sums == 0:
                 st.write('Please, enter the weights properly.')
             else:
-                confidence = round((score_price*weight_price + score_volume*weight_volume + 
+                confidence = round((score_beta * weight_beta + score_price*weight_price + score_volume*weight_volume + 
                                 score_market_cap*weight_market_cap + score_pc_1h*weight_pc_1h + 
                                 score_pc_24h*weight_pc_24h + score_pc_7d*weight_pc_7d +
                                 score_pc_30d*weight_pc_30d + score_pc_60d*weight_pc_60d +
@@ -515,6 +515,7 @@ def user_analysis():
                         'circulating_supply':[coin_list[selected_coin]["circulating_supply"]], 'score_circulating_supply':[score_circulating_supply], 'weight_circulating_supply':[weight_circulating_supply],
                         'max_supply':[coin_list[selected_coin]["max_supply"]], 'score_max_supply':[score_max_supply], 'weight_max_supply':[weight_max_supply],
                         'total_supply':[coin_list[selected_coin]["total_supply"]], 'score_total_supply':[score_total_supply], 'weight_total_supply':[weight_total_supply],
+                        'beta':[beta],'score_beta':[score_beta],'weight_beta':[weight_beta],
                         'coin_risk %':[coin_risk]}
 
             
