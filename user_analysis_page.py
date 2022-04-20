@@ -494,6 +494,8 @@ def user_analysis():
                     st.markdown("*Moderate Risk: 25-75%*")
                 with col3:
                     st.markdown("*High Risk: 75-100%*")
+                
+                st.markdown("Please see **Result Explanation** in the Introduction Page to learn more about the result interpretation.")
             
                 # SAVE THE RESULTS IN CSV FILE
 

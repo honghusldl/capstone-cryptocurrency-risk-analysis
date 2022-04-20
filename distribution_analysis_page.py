@@ -180,7 +180,7 @@ def distribution_analysis():
                             result_volume_change_24h * 100 * weight_volume_24h / get_max_density(df, '%volume_change_24h')
                             
         weight_sum = sum([weight_pc_24h,weight_pc_30d,weight_pc_60d,weight_pc_7d,weight_pc_90d,weight_volume_24h])
-        risk_output = round(100 - (final_result / weight_sum),1)
+        risk_output = round(100 - (final_result / 6/weight_sum),1)
         
         
         # display risk index to users
