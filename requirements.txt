@@ -7,3 +7,4 @@ cryptocmd
 scipy
 streamlit
 streamlit_option_menu
+plotly
