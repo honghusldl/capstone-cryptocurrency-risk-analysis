@@ -98,8 +98,10 @@ def get_beta(symbol):
   btc_df = scraper_btc.get_dataframe()
   
   # adjust the length of bitcoin df to match the alt df
-  alt_length = len(alt_df)
-  btc_df = btc_df[:alt_length]
+  # alt_length = len(alt_df)
+  # btc_df = btc_df[:alt_length]
+  alt_df = alt_df[:30]
+  btc_df = btc_df[:30]
 
   # get log return for both coins
   alt_price = alt_df['Close']
